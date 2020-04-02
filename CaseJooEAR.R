@@ -10,11 +10,11 @@ library(xml2)
 library(quanteda)
 library(reshape2)
 
+
 #to include arguments, use Rscript --verbose CaseJooEAR.R search-terms.txt tsv-files.txt >& CaseJooEAR.Rout
 
 memory.limit(size = 56000)
 args <- commandArgs(trailingOnly = TRUE)
-print(args)
 
 query.file <- args[1]
 tsv.files <- args[2] #allow multiple tsv files
@@ -32,144 +32,122 @@ input_files
 uniqGenes <- c()
 aliases <- c()
 gene.alias.mat <- c("GENE","ALIAS")
-print("reading in tsv files\n")
 for(i in 1:length(input_files)){
 #i<-1
   df <- import(input_files[i],format = 'tsv')
-  print("finished import")
-  #df <- fread(input_files[i],sep="\t",header=TRUE)
   tm1 <- df
   keep.cols <- cbind(tm1$gene,tm1$aliases)
-  print("pulled columns")
-#keep.cols
   gene.alias.mat <- rbind(gene.alias.mat,keep.cols) 
-  print("made the gene alias matrix")
-#gene.alias.mat
-#  uniqGenes <- c(uniqGenes,unique(tm1$gene))
-#  aliases <- c(aliases,unique(na.exclude(unlist(strsplit(tm1$aliases,',')))))
-}
-#uniqGenes <- unique(c(tm1$gene,aliases))
-
-# get the list of all genes and their associated aliases
-gene.alias.mat <- gene.alias.mat[-1,]
-print("removed top row")
-gene.alias.mat <- as.data.table(gene.alias.mat)
-print("converted gene alias df to dt")
-setnames(gene.alias.mat,c("GENE","ALIAS"))
-setkey(gene.alias.mat,"GENE")
-gene.alias.mat <- unique(gene.alias.mat,by="GENE")
-print("got unique gene.alias.mat")
+  gene.alias.mat <- gene.alias.mat[-1,]
+  gene.alias.mat <- as.data.table(gene.alias.mat)
+  setnames(gene.alias.mat,c("GENE","ALIAS"))
+  setkey(gene.alias.mat,"GENE")
+  gene.alias.mat <- unique(gene.alias.mat,by="GENE")
 
 #can I create a lookup table?
-gene.alias.mat[,ALIAS:=ifelse(is.na(ALIAS),GENE,ALIAS)]
-print("fixed missing aliases")
+  gene.alias.mat[,ALIAS:=ifelse(is.na(ALIAS),GENE,ALIAS)]
 
 #start creating the lookup table so that each alias is associated with its current gene symbol
-gene.alias.mat$ALIAS
-(strsplit(gene.alias.mat$ALIAS,','))
-is.list(strsplit(gene.alias.mat$ALIAS,','))
-my.list <- strsplit(gene.alias.mat$ALIAS,',')
-lookup.table <- (do.call(rbind.data.frame,my.list))
-#as.data.frame(strsplit(gene.alias.mat$ALIAS,','))
-#lookup.table <- t(as.data.frame(strsplit(gene.alias.mat$ALIAS,',')))
-print("started lookup table")
-lookup.table <- cbind(gene.alias.mat$GENE, lookup.table)
-lookup.table
-print("added gene names to lookup table")
+  gene.alias.mat$ALIAS
+  my.list <- strsplit(gene.alias.mat$ALIAS,',')
+  lookup.table <- (do.call(rbind.data.frame,my.list))
+  lookup.table <- cbind(gene.alias.mat$GENE, lookup.table)
 # convert the wide table to a long table
-#rownames(lookup.table) <- c()
-colnames(lookup.table) <- c()
-print("removed col names")
-lookup.table
-lookup.table <- sapply(lookup.table,as.character)
-num_cols <- length(lookup.table[1,])
-print("number of columns in lookup.table")
-num_cols
-lookup.table[,1]
-lookup.table[,2]
-gene.symbols <- c(rep((lookup.table[,1]),num_cols))
-print("repeat of gene symbols")
-gene.symbols
-gene.alias <- as.data.table(melt(as.character(lookup.table),id.vars=1,value.name="ALIAS"))
-print("created gene.alias long table")
-gene.alias
-#gene.alias[,Var1:=NULL]
-#gene.alias[,Var2:=NULL]
-print("gene.alias")
-gene.alias[,ALIAS:=as.character(ALIAS)] #necessary so that they are not though of as factors
-gene.alias
-#q()
+  colnames(lookup.table) <- c()
+  lookup.table <- sapply(lookup.table,as.character)
+  num_cols <- length(lookup.table[1,])
+  gene.symbols <- c(rep((lookup.table[,1]),num_cols))
+  gene.alias <- as.data.table(melt(as.character(lookup.table),id.vars=1,value.name="ALIAS"))
+  gene.alias[,ALIAS:=as.character(ALIAS)] #necessary so that they are not though of as factors
 
-lookup.table <- as.data.table(cbind(gene.symbols,gene.alias))
-print("lookup.table")
-lookup.table
-setkey(lookup.table,"ALIAS")
-lookup.table <- unique(lookup.table, by="ALIAS")
-setkey(lookup.table,"gene.symbols")
-print("lookup.table")
-lookup.table
+  lookup.table <- as.data.table(cbind(gene.symbols,gene.alias))
+  setkey(lookup.table,"ALIAS")
+  lookup.table <- unique(lookup.table, by="ALIAS")
+  setkey(lookup.table,"gene.symbols")
 
-#c(lookup.table$gene.symbols,lookup.table$ALIAS)
-#length(lookup.table$ALIAS)
-uniqGenes <- unique(c(lookup.table$gene.symbols,lookup.table$ALIAS))
-#uniqGenes <- lookup.table$ALIAS
-print("unique Genes")
-uniqGenes
-#q()
-pubmedDf <- data.frame()
-gcnt <- 0
-gcnt2 <- 0
-#query_terms <- c("Neurodegeneration", "Dementia", "Intellectual disability", "Cerebral cortical atrophy")
-num_terms <- length(query_terms)
-num_terms
-for(i in 1:length(query_terms)){
+  uniqGenes <- unique(c(lookup.table$gene.symbols,lookup.table$ALIAS))
+  gcnt <- 0
+  gcnt2 <- 0
+  num_terms <- length(query_terms)
+  for(i in 1:length(query_terms)){
     query_terms[i] <- paste0(query_terms[i],'[Title/Abstract])')
-}
-query_terms
-#q()
-#start query term 
-base_query <- paste(query_terms,collapse=' OR ')
+  }
+  base_query <- paste(query_terms,collapse=' OR ')
 #add in the opening brackets
-base_query <- paste0(paste(rep('(',length(query_terms)),collapse=""),base_query, collpase="")
-base_query
-#i<-uniqGenes[4]
+  base_query <- paste0(paste(rep('(',length(query_terms)),collapse=""),base_query, collpase="")
 
-for (i in uniqGenes){
+  pubmedDf <- data.frame(matrix(ncol = 5, nrow = 0))
+  for (g in uniqGenes){
     print(gcnt2)
     gcnt2 <- gcnt2 + 1
-    # start with this query as it is. I think the () depend on the number of tererms. I want to change this to open a file with a list of terms and then make the query based on that file
 
-    my_query <- paste(base_query,' AND ',i,'[Title/Abstract]',sep = '')
-    my_query
+    my_query <- paste(base_query,' AND ',g,'[Title/Abstract]',sep = '')
     out.A <- batch_pubmed_download(pubmed_query_string = my_query, 
                                    format = "xml", 
                                    batch_size = 5000,
-                                   dest_file_prefix = "project4") ##EAR will want to make this something the user can change easily
-    out.A
+                                   dest_file_prefix = "project4", encoding = "ASCII") ##EAR will want to make this something the user can change easily
+
+    
+    
     if (!is.null(out.A[1])){
-        new_PM_df <- table_articles_byAuth(pubmed_data =out.A[1] , included_authors = "first", max_chars = 0)
-        if (nrow(new_PM_df)>0){
-            new_PM_df$gene <- i
-            if (gcnt == 0){
-                pubmedDf <- new_PM_df[,c("pmid","title" ,"year","gene")]
-                gcnt <- gcnt + 1}
-            else {
-                pubmedDf <- rbind(pubmedDf,new_PM_df[,c("pmid","title","year","gene")])
-                gcnt <- gcnt + 1}
+        a <- read_xml(out.A)
+        b <- xml_find_all(a, "//PubmedBookArticle")
+        for (i in seq_along(b)){
+            # extracting the abstract, pub_year, pmid, title from xml data
+            abstract <- ""
+            abstract <- xml_text(xml_find_all(read_xml(as.character(b[[i]])),"//Abstract"))
+if(length(abstract)==0){
+  abstract <- NA
+}
+            pub_year <- xml_text(xml_find_all(read_xml(as.character(b[[i]])),"//ContributionDate//Year"))
+if(length(pub_year)==0){
+  pub_year <- NA
+}
+            pmid <- xml_text(xml_find_all(read_xml(as.character(b[[i]])),"//BookDocument//PMID"))
+if(length(pmid)==0){
+  pmid <- NA
+}
+            title <- xml_text(xml_find_all(read_xml(as.character(b[[i]])),"//BookDocument//ArticleTitle"))
+if(length(title)==0){
+  title <- NA
+}
+            
+            # the authorlist include the authors and editors groups, so I just extract the authors group
+            authorlist <- xml_find_all(read_xml(as.character(b[[i]])),"//AuthorList")
+            for(j in seq_along(authorlist)){
+                if(xml_attr(authorlist[[j]],"Type")=='authors'){
+                    authors <- xml_find_all(read_xml(as.character(authorlist[[j]])), "//Author")
+                    author_list <- c()
+                    for(k in seq_along(authors)){
+                        author_f <- xml_text(xml_find_all(read_xml(as.character(authors[[k]])), "//ForeName"))
+                        author_l <- xml_text(xml_find_all(read_xml(as.character(authors[[k]])), "//LastName"))
+                        author_list <- c(author_list , paste(author_f, author_l, sep = " "))
+                    }
+                }
+            }
+            # binding the new row to the dataframe pmid, title, pub_year, abstract, "gene"
+            # Note: in the line below, I just added the "gene" as a string, we need to put a variable here
+            pubmedDf <- rbind(pubmedDf,as.data.frame(t(c(pmid, title, pub_year, abstract, g))))
         }
     }
+    
 }
+x <- c("pmid","title","year","abstract","gene")
+colnames(pubmedDf) <- x
+    
+
+
+
 names(pubmedDf)
 pubmedDf
 output <- as.data.table(pubmedDf)
 output <- output[,list(gene,pmid,year,title)]
-length(output$gene)
 setnames(output, "gene","ALIAS")
 setkey(output,"ALIAS")
 setkey(lookup.table,"ALIAS")
 output <- lookup.table[output]
-head(output)
 
+pubmedDT <- copy(output) #to be used in the stats part
 setkeyv(output,c("gene.symbols","pmid"))
 output <- unique(output,by=c("gene.symbols","pmid"))
 output[,LINK:=paste0("https://www.ncbi.nlm.nih.gov/pubmed/",pmid)]
@@ -178,11 +156,12 @@ setnames(output,"gene.symbols","SYMBOL")
 write.csv(output,"pubmed-search.csv",quote=FALSE,row.names=FALSE)
 
 num_genes=length(unique(output$SYMBOL))
-print("Number of genes is ")
-num_genes
 
 q()
-summGenes <- pubmedDf %>% group_by(gene) %>% summarise(cnt = n_distinct(title))
+setnames(pubmedDT,"gene.symbols","gene")
+pubmedDT[,ALIAS:=NULL]
+summGenes <- as.data.frame(pubmedDT) %>% group_by(gene) %>% summarise(cnt = n_distinct(title)) #why not distinct by pmid?
+#summGenes <- pubmedDf %>% group_by(gene) %>% summarise(cnt = n_distinct(title))
 c <- tm1[which(tm1$gene %in% summGenes$gene[which(summGenes$cnt>0)]),]
 
 c
@@ -318,6 +297,9 @@ meanSim <- simDf %>%
     group_by(X1) %>%
     summarise(count=n(),m = mean(X2))
 meanSim
+output2 <- as.data.table(meanSim)
+write.csv(output2,"meanSim.csv",quote=FALSE, row.names=FALSE)
+print("simDf\n")
 q()
 ggplot(meanSim,aes(m,count,label=X1))+
     geom_point(color = "blue", size = 3)+
