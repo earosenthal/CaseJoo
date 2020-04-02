@@ -157,7 +157,7 @@ write.csv(output,"pubmed-search.csv",quote=FALSE,row.names=FALSE)
 
 num_genes=length(unique(output$SYMBOL))
 
-q()
+#q()
 setnames(pubmedDT,"gene.symbols","gene")
 pubmedDT[,ALIAS:=NULL]
 summGenes <- as.data.frame(pubmedDT) %>% group_by(gene) %>% summarise(cnt = n_distinct(title)) #why not distinct by pmid?
