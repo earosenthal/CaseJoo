@@ -38,6 +38,7 @@ for(i in 1:length(input_files)){
   tm1 <- df
   keep.cols <- cbind(tm1$gene,tm1$aliases)
   gene.alias.mat <- rbind(gene.alias.mat,keep.cols) 
+  }
   gene.alias.mat <- gene.alias.mat[-1,]
   gene.alias.mat <- as.data.table(gene.alias.mat)
   setnames(gene.alias.mat,c("GENE","ALIAS"))
@@ -85,7 +86,8 @@ for(i in 1:length(input_files)){
     out.A <- batch_pubmed_download(pubmed_query_string = my_query, 
                                    format = "xml", 
                                    batch_size = 5000,
-                                   dest_file_prefix = "project4", encoding = "ASCII") ##EAR will want to make this something the user can change easily
+                                   #dest_file_prefix = "project4",
+                                   encoding = "ASCII") ##EAR will want to make this something the user can change easily
 
     
     
