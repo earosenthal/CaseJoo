@@ -1,1 +1,14 @@
-Here is an example on how to use CaseJooEAR
+The INPUT directory contains five files:
+run-CaseJoo.cmd: This file contains the commands to run CaseJooEAR.R, with search-terms.txt and tsvfiles.txt as inputs.
+search-terms.txt: List of search terms. Each term is on its own line.
+tsvfiles.txt: List of tab separated files that contain the gene lists and their aliases
+example-gene-list1.tsv: tab separated file containing at least two columns, labeled 'gene' and 'aliases' 
+example-gene-list2.tsv: tab separated file containing at least two columns, labeled 'gene' and 'aliases'
+
+In this case the proband has intellectual disability. The search-terms.txt file contains the phenotypes that were deemed pertinent for this proband.
+The example-gene-list1.tsv and example-gene-list2.tsv contain the list of genes in which rare (maxAAF<0.005) variants were found upon exome sequencing.
+
+The OUTPUT directory contains three files:
+pubmed-search.csv: The basic output with the each gene that has a match, the PMID link for articles that matched that gene and at least one of the search terms.  
+meanSim.csv: Scores that are used to prioritize genes. This is still under development.
+easyPubMed_data_01.txt: Full output from the pubmed search in XML format
