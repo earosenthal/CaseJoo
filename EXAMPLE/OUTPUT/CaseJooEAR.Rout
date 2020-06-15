@@ -1,0 +1,98 @@
+running
+  '/net/gs/vol3/software/modules-sw/R/3.6.1/Linux/RHEL6/x86_64/lib64/R/bin/R --slave --no-restore --file=/net/jarvik/vol1/home/erosen/UDN/practice/gemini.b38/304/CaseJooEAR.R --args search-terms.txt tsvfiles.txt'
+
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:data.table’:
+
+    between, first, last
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Package version: 2.0.1
+Parallel computing: 2 of 144 threads used.
+See https://quanteda.io for tutorials and examples.
+
+Attaching package: ‘quanteda’
+
+The following object is masked from ‘package:rio’:
+
+    convert
+
+The following object is masked from ‘package:utils’:
+
+    View
+
+
+Attaching package: ‘reshape2’
+
+The following object is masked from ‘package:tidyr’:
+
+    smiths
+
+The following objects are masked from ‘package:data.table’:
+
+    dcast, melt
+
+[1] Inf
+Warning message:
+'memory.limit()' is Windows-specific 
+Read 4 items
+[1] "Neurodegeneration"         "Dementia"                 
+[3] "Intellectual disability"   "Cerebral cortical atrophy"
+Read 2 items
+[1] "example-gene-list1.tsv" "example-gene-list2.tsv"
+ [1] "ANK2,LQT4"          "FADS6"              "FAM71D"            
+ [4] "LNP1"               "MBD5,KIAA1461,MRD1" "MRPL49,NOF1"       
+ [7] "MUC4"               "NTN3,NTN2L"         "NWD1"              
+[10] "OR4S2"              "SGSH,MPS3A,SFMD"    "UPK3B,UPIIIB,P35"  
+[1] "PubMed data batch 1 / 1 downloaded..."
+[1] "PubMed data batch 1 / 1 downloaded..."
+[1] "PubMed data batch 1 / 1 downloaded..."
+[1] "PubMed data batch 1 / 1 downloaded..."
+[1] "PubMed data batch 1 / 1 downloaded..."
+[1] "PubMed data batch 1 / 1 downloaded..."
+[1] "pmid"     "title"    "year"     "abstract" "gene"    
+      pmid                          title year
+1 27786435        MBD5 Haploinsufficiency 2016
+2 31536183 Mucopolysaccharidosis Type III 2019
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       abstract
+1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         MBD5 haploinsufficiency is a neurodevelopmental disorder characterized by developmental delay / intellectual disability (DD/ID), severe speech impairment, seizures, sleep disturbances, and abnormal behaviors. Most children lack speech entirely or have single words, short phrases, or short sentences. Seizures are present in about 80%; onset is usually around age two years. Sleep disturbances, present in about 80%, can result in excessive daytime drowsiness. Abnormal behaviors can include autistic-like behaviors (80%) and self-injury and aggression (60%).Most commonly the diagnosis of MBD5 haploinsufficiency is established in a proband by detection of one of the following alterations on molecular genetic testing: Deletion of 2q23.1 that encompasses all or part of MBD5 (~90% of affected individuals). Intragenic deletion involving one or more exons of MBD5 (~5%). A heterozygous pathogenic sequence variant in MBD5 (~5%). Rarely, an apparently balanced complex chromosome rearrangement of the 2q23.1 region involving MBD5 is causative.Treatment of manifestations: A multidisciplinary approach that typically includes specialists in clinical genetics, neurology, child development, behavioral therapy, nutrition/feeding, speech and language therapy, and occupational and physical therapy is recommended. Infants benefit from enrollment in an early-intervention program, and school-age children benefit from an individualized educational program. Speech therapy (including nonverbal methods of communication) should be introduced early. Seizures, behavior problems, and sleep disturbances are treated in a routine manner. Surveillance: Periodic neurodevelopmental and behavioral evaluations to assist in the management of cognitive and behavioral problems.MBD5 haploinsufficiency is inherited in an autosomal dominant manner. Typically, deletion of 2q23.1 is de novo; in some instances, an MBD5 pathogenic deletion or MBD5 sequence variant is inherited from a parent who is mildly affected. Rarely, parent-to-child transmission of an unbalanced derivative chromosome involving the 2q23.1 region occurs. Once the genetic alteration resulting in MBD5 haploinsufficiency has been identified in an affected family member, prenatal testing for a pregnancy at increased risk and preimplantation genetic diagnosis are possible.Copyright .. 1993-2020, University of Washington, Seattle. GeneReviews is a registered trademark of the University of Washington, Seattle. All rights reserved.
+2 Mucopolysaccharidosis type III (MPS III) is a multisystem lysosomal storage disease characterized by progressive central nervous system degeneration manifest as severe intellectual disability (ID), developmental regression, and other neurologic manifestations including autism spectrum disorder (ASD), behavioral problems, and sleep disturbances. Disease onset is typically before age ten years. Disease course may be rapidly or slowly progressive; some individuals with an extremely attenuated disease course present in mid-to-late adulthood with early-onset dementia with or without a history of ID. Systemic manifestations can include musculoskeletal problems (joint stiffness, contractures, scoliosis, and hip dysplasia), hearing loss, respiratory tract and sinopulmonary infections, and cardiac disease (valvular thickening, defects in the cardiac conduction system). Neurologic decline is seen in all affected individuals; however, clinical severity varies within and among the four MPS III subtypes (defined by the enzyme involved) and even among members of the same family. Death usually occurs in the second or third decade of life secondary to neurologic regression or respiratory tract infections.The diagnosis of MPS III is established in a proband with suggestive clinical and laboratory findings in whom either biallelic pathogenic variants in one of four genes (GNS, HGSNAT, NAGLU, and SGSH) or deficiency of the respective lysosomal enzyme has been identified.Treatment of manifestations: Supportive therapies for neurodevelopmental delays, hearing loss, and visual impairment; medications (rather than behavioral therapy) for psychiatric/behavioral issues; physical therapy and/or orthopedic management of musculoskeletal manifestations; and management as prescribed by consulting specialists for seizures, cardiac involvement, sleep disorders, feeding difficulties. Surveillance: Routine monitoring of: developmental capabilities and educational needs, destructive or disruptive behaviors; musculoskeletal involvement; hearing; cardiac involvement. Agents/circumstances to avoid: Procedures requiring anesthesia in centers ill-equipped or inexperienced in caring for patients with complex airway-management issues; hip surgery (due to high risk of osteonecrosis of the femoral head); environments not adapted to minimize risk from unpredictable behaviors. Therapies under investigation: Despite ongoing research for a variety of therapeutic options, no treatments are currently clinically available for treatment of the primary manifestations of MPS III.MPS III is inherited in an autosomal recessive manner. At conception, each sib of an affected individual has a 25% chance of being affected, a 50% chance of being an asymptomatic carrier, and a 25% chance of being unaffected and not a carrier. Once the MPS III-causing pathogenic variants have been identified in an affected family member, carrier testing for at-risk relatives, prenatal testing for a pregnancy at increased risk, and preimplantation genetic diagnosis are possible.Copyright .. 1993-2020, University of Washington, Seattle. GeneReviews is a registered trademark of the University of Washington, Seattle. All rights reserved.
+  gene
+1 MBD5
+2 SGSH
+  gene            aliases
+3 MBD5 MBD5,KIAA1461,MRD1
+There were 20 warnings (use warnings() to see them)
+     X1                 X2
+1  MBD5  0.246856879273919
+2  MBD5 0.0966259666672157
+3  MBD5   0.10212087841965
+4  SGSH                  0
+5  SGSH                  0
+6  SGSH 0.0103553504405491
+7  SGSH                  0
+8  SGSH                  0
+9  SGSH                  0
+10 SGSH   0.10212087841965
+11 SGSH                  0
+12 SGSH                  0
+13 SGSH                  0
+14 SGSH                  0
+15 SGSH                  0
+16 SGSH                  0
+17 SGSH                  0
+18 SGSH                  0
+# A tibble: 2 x 3
+  X1    count       m
+  <fct> <int>   <dbl>
+1 MBD5      3 0.149  
+2 SGSH     14 0.00803
